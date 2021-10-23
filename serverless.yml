@@ -28,7 +28,7 @@ functions:
     handler: src/lambda/http/oktaEventHook.handler
     events:
       - http:
-          method: get
+          method: any
           path: okta-event
           cors: true
 

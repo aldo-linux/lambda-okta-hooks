@@ -27,12 +27,14 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
             };
 
     } else {
-        console.log('verification request, header value is: ' + event.headers['x-okta-verification-challenge']);
+        const verificationHeader:string =  event.headers['X-Okta-Verification-Challenge'];
+        console.log('verification request, header value is: ' + verificationHeader);
+
         return {
             statusCode: 200,
             body: JSON.stringify({
-                "verification" : event.headers["x-okta-verification-challenge"]
-              })
+                verification : verificationHeader
+            })
         };
     }
 }
