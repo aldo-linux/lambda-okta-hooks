@@ -1,4 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult} from "aws-lambda"
+import { createOktaEventService } from "../../service/oktaEventService";
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
@@ -9,6 +10,10 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
         const targetUserId = oktaEvents[0].target[0].id;
         console.log('getting user ', targetUserId);
 
+        // Create the Okta Event in DynamoDB for Auditing purposes
+        //const result = "";
+        const result = await createOktaEventService(event.body);
+        
         /*
         const user = await client.getUser(targetUserId);
         console.log('got user ', targetUserId);
@@ -22,7 +27,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
         return {
                 statusCode: 200,
                 body: JSON.stringify({
-                    item: ""
+                    item: result
                   })
             };
 
